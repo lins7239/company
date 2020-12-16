@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zg.dao.UserDao" >
+
+   <resultMap type="User" id="UserResult">
+		<result property="id" column="id"/>
+		<result property="userNo" column="userNo"/>
+		<result property="userName" column="userName"/>
+		<result property="password" column="password"/>
+		<result property="department" column="department"/>
+		<result property="className" column="className"/>
+	</resultMap>
+	
+	<!-- 用户学号登入 -->
+    <select id="getByUserNo" parameterType="String" resultMap="UserResult">
+        
+        select * from user where userNo=#{userNo}
+    
+    </select>
+    
+    <!-- 查出用户对应角色 -->
+    <select id="getRoles" parameterType="String" resultType="String">
+    
+        select r.rolename from user u,role r where u.roleId=r.id and u.userNo=#{userNo}
+        
+    </select>
+   
+   <!-- 用户注册 -->
+    <insert id="insertUser" parameterType="cn.zg.po.User">
+      insert into user(userNo,userName,password,department,className,roleId)
+      values(#{userNo,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{department,jdbcType=VARCHAR},
+      #{className,jdbcType=VARCHAR},1)
+    
+    </insert>
+   
+   <!-- 查出用户信息 -->
+   <select id="selectUser" parameterType="String" resultMap="UserResult">
+       select * from user where userNo=#{userNo}
+     
+   </select>
+   
+   <!-- 更新用户 -->
+   <update id="updateUser" parameterType="cn.zg.po.User" >
+     
+     update user set userName=#{userName},password=#{password},department=#{department},className=#{className} where userNo=#{userNo}
+   </update>
+</mapper>

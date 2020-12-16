@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.zg.dao.TeamDao" >
+
+   <resultMap type="Team" id="TeamResult">
+		<result property="id" column="id"/>
+		<result property="category" column="category"/>
+		<result property="userNo" column="userNo"/>
+		<result property="userName" column="userName"/>
+		<result property="department" column="department"/>
+		<result property="className" column="className"/>
+		<result property="grouperName" column="grouperName"/>
+		<result property="projectName" column="projectName"/>
+		<result property="score" column="score"/>
+	</resultMap>
+	<!-- <resultMap type="User" id="UserResult">
+		<result property="id" column="id"/>
+		<result property="userNo" column="userNo"/>
+		<result property="userName" column="userName"/>
+		<result property="password" column="password"/>
+		<result property="department" column="department"/>
+		<result property="className" column="className"/>
+	</resultMap> -->
+	<insert id="insert" parameterType="cn.zg.po.Team">
+	
+	      insert into team(projectName,category,department,className,userNo,userName,grouperName,score) values(#{projectName},#{category},#{department},#{className},#{userNo},#{userName},#{userName},8)
+	</insert>
+	
+	<!-- 添加组员 -->
+	<insert id="insertGroup" parameterType="cn.zg.po.Team">
+	
+	      insert into team(category,projectName,department,className,userNo,userName,grouperName) values(#{category},#{projectName},#{department},#{className},#{userNo},#{userName},#{grouperName})
+	</insert>
+	
+	<!-- 查出所有团队 -->
+	<select id="selectAllTeam" resultMap="TeamResult">
+	    select * from team
+	
+	</select>
+	
+	<!-- 查出所有用户 -->
+	<select id="selectAllUser" resultType="cn.zg.po.User">
+	
+	select * from user 
+	</select>
+	
+	<!-- 查出队员信息 -->
+	<select id="teamMessage" parameterType="Integer" resultType="cn.zg.po.Team">
+	
+	 select * from team where id=#{id}
+	</select>
+	<!-- 删除团队 -->
+	<delete id="delete" parameterType="Integer" >
+          delete from team where id=#{id}	
+		</delete>
+		
+	<!-- 更新团队信息 -->	
+	<update id="updateTeam" parameterType="cn.zg.po.Team">
+	
+	  update team set category=#{category},projectName=#{projectName},department=#{department},className=#{className},userNo=#{userNo},userName=#{userName},grouperName=#{grouperName},projectName=#{projectName} where id=#{id}
+	
+	</update>
+		
+		
+	<!-- 删除用户 -->	
+	<delete id="deleteUser" parameterType="Integer" >
+	  delete from user where id=#{id}
+	</delete>
+	
+	<!-- 查出所有作品路径 -->
+	<select id="selectAllWork" resultType="cn.zg.po.Uri">
+	
+	select * from uri
+	</select>
+	
+	<!-- 删除作品 -->
+	<delete id="deleteWork" parameterType="Integer">
+	
+	  delete from uri where id=#{id}
+	</delete>
+	
+	<!-- 查出分数 -->
+	<select id="selectAllScore" resultType="cn.zg.po.Team">
+	
+	select * from team
+	</select>
+	
+	<!-- 删除分数 -->
+	<delete id="deleteScore" >
+	
+	delete from team where id=#{id}
+	</delete>
+	
+</mapper>
